@@ -23,14 +23,21 @@ export default class App extends Component {
   }
 
   onSelect = (result) => {
-    this.setState({ value: result })
+    this.setState({ value: result, results: [] })
+  }
+
+  onButtonClick = () => {
+    alert(`you selected ${this.state.value}`);
   }
 
   filterResults = () => {
     const inputValue = this.state.value.toLowerCase();
     const results = this.state.suburbs.reduce((acc, val) => {
       const inName = val.name.toLowerCase().indexOf(inputValue) === 0;
-      const wasFound = inName;
+      const inState = val.state.abbreviation.toLowerCase().indexOf(inputValue) === 0;
+      const inLocality = val.locality.toLowerCase().indexOf(inputValue) === 0;
+      const inPostcode = val.postcode.toString().toLowerCase().indexOf(inputValue) === 0;
+      const wasFound = inName || inPostcode || inLocality || inState;
       return wasFound
         ? [ ...acc, val ]
         : acc;
@@ -55,7 +62,7 @@ export default class App extends Component {
         <MainContainer>
           <SearchAndButtonContainer>
           <Input value={this.state.value} onChange={this.handleChange}/>
-          <Button/>
+          <Button onClick={this.onButtonClick}/>
           </SearchAndButtonContainer>
           { this.state.results &&
             <ResultsList
