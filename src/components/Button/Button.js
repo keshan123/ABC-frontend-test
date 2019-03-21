@@ -1,11 +1,11 @@
 import React from "react";
 import iconPath from "./icons.svg";
-import "./Button.css";
+import {StyledSVG, StyledButton } from "./styles.js";
 
 /**
  * <Button
  *   className="MyButton"
- *   onClick={() => console.log('Click')} 
+ *   onClick={() => console.log('Click')}
  * />
  *
  * @prop {Function} onClick
@@ -16,15 +16,15 @@ export default function Button(props) {
   const { onClick, className, ...otherProps } = props;
 
   return (
-    <button
+    <StyledButton
       type="button"
       className={"Button " + (className || "")}
       onClick={onClick}
       {...otherProps}
     >
-      <svg viewBox="0 0 24 24" width="24" height="16">
+      <StyledSVG viewBox="0 0 24 24" width="24" height="16">
         <use xlinkHref={iconPath + "#dls-icon-arrow-right"} />
-      </svg>
-    </button>
+      </StyledSVG>
+    </StyledButton>
   );
 }

@@ -1,4 +1,6 @@
-.Button {
+import styled from 'styled-components';
+
+export const StyledButton = styled.button`
   align-items: center;
   background: #fdc605;
   border: none;
@@ -8,9 +10,9 @@
   display: flex;
   justify-content: center;
   height: 56px;
-}
+`;
 
-.Button svg {
+export const StyledSVG = styled.svg`
   height: 1.5rem;
   width: 1.5rem;
-}
+`;
