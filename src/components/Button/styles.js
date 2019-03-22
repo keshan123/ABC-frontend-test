@@ -9,7 +9,7 @@ export const StyledButton = styled.button`
   cursor: pointer;
   display: flex;
   justify-content: center;
-  height: 56px;
+  height: 46px;
 `;
 
 export const StyledSVG = styled.svg`
