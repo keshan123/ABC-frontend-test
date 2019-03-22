@@ -15,83 +15,87 @@ const itemToString = (item) => item ? item.name : '';
 export default class App extends React.Component {
   state = {
     suburbs: [],
-  }
+  };
 
-  // Grabs the suburbs when componentDidMount
+  // Grabs the suburbs
   componentDidMount() {
     axios.get(`http://localhost:8010/proxy/suburbs.json?q=Syd`)
-      .then(res => {
-        const suburbs = res.data;
-        this.setState({ suburbs, loaded: true });
-      }
-    )
-  }
+    .then(res => {
+      this.setState({
+        suburbs: res.data,
+      });
+    });
+  };
 
   // Shows the alert with the updated inputValue
-  handleSubmit = (inputValue) => {
-    alert(inputValue)
-  }
+  handleSubmit = (inputValue) => alert(inputValue);
+
+  // uses matchSorter to filter through results based on inputValue
+  filterItems = (value) => {
+    const { suburbs } = this.state;
+    return value
+      ? matchSorter(
+        suburbs,
+        value,
+        {
+          keys: [
+            'name',
+            'locality',
+            'postcode',
+            'state.name',
+            'state.abbreviation',
+          ]
+        }
+      )
+      : suburbs;
+  };
 
   render() {
-    const getItems = value => value ? matchSorter(
-      this.state.suburbs,
-      value,
-      {keys: [
-        'name', // Can search through all these paramters with the inputValue
-        'locality',
-        'postcode',
-        'state.name',
-        'state.abbreviation',
-      ]}
-    ) : this.state.suburbs
-
     return (
       <div>
         <Downshift itemToString={itemToString}>
           {({
-            getInputProps,  // Getters
+            getInputProps,
             getItemProps,
             getLabelProps,
             getMenuProps,
-
-            clearSelection, // Actions
-
-            highlightedIndex, // State
+            highlightedIndex,
             inputValue,
             isOpen,
-            selectedItem,
           }) => (
             <div>
               <LabelInputButtonContainer>
                 <label {...getLabelProps()}> Suburbs </label>
                 <Input {...getInputProps()}/>
-                <Button onClick={() => this.handleSubmit(inputValue)}/>
+                <Button
+                  className="search-button"
+                  onClick={() => this.handleSubmit(inputValue)}
+                />
               </LabelInputButtonContainer>
               <ResultsListContainer
                 {...getMenuProps()}
               >
-                {
-                  isOpen
-                  ? getItems(inputValue).map((item, index) => (
+                {isOpen && (
+                  this.filterItems(inputValue).map((item, index) => (
                     <ResultsListItem
                       {...getItemProps({
                         item,
                         key: `${item.name}|||${item.postcode}`,
                         style: {
-                          backgroundColor: index === highlightedIndex ? 'gray' : null,
-                          color: index === highlightedIndex ? 'white' : 'black',
-                        }
-                      })}
-                    >
-                      {item.name}
-                    </ResultsListItem> ))
-                  : null
-                }
+                           backgroundColor: index === highlightedIndex ? 'gray' : null,
+                           color: index === highlightedIndex ? 'white' : 'black',
+                         }
+                       })}
+                     >
+                        {item.name}
+                     </ResultsListItem> )
+                  )
+                )}
               </ResultsListContainer>
             </div>
           )}
         </Downshift>
       </div>
-    )
-  }
-}
+    );
+  };
+};

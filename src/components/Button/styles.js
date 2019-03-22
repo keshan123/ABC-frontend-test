@@ -10,6 +10,10 @@ export const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   height: 46px;
+
+  &:focus {
+    outline: thin dotted;
+  }
 `;
 
 export const StyledSVG = styled.svg`

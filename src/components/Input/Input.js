@@ -14,6 +14,7 @@ export const Input = styled.input`
   &:focus {
     border-color: #fdc605;
     border-left-width: 0.5rem;
+    outline: thin dotted;
   }
 
   &:placeholder {
