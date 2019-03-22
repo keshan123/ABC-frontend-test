@@ -38,8 +38,8 @@ You do not have to complete all the requirements, but we encourage you to make a
 ```
 git clone https://github.com/abcaustralia/frontend-coding-exercise.git
 cd frontend-coding-exercise
-npm install
-npm run start
+npm install / yarn
+npm run start / yarn start
 ```
 
 This project uses data provided by postcodeapi.com.au. Due to CORS limitations `npm run start` will start a local proxy server on http://localhost:8010/proxy.

@@ -7,7 +7,7 @@ import Button from './components/Button/Button.js';
 import { ResultsListContainer } from './components/ResultsList/ResultsListContainer.js'
 import { ResultsListItem } from './components/ResultsList/ResultsListItem.js'
 import { Input } from './components/Input/Input.js'
-import { InputButtonContainer } from './containers/styles.js'
+import { LabelInputButtonContainer } from './containers/styles.js'
 
 
 const itemToString = (item) => item ? item.name : '';
@@ -17,6 +17,7 @@ export default class App extends React.Component {
     suburbs: [],
   }
 
+  // Grabs the suburbs when componentDidMount
   componentDidMount() {
     axios.get(`http://localhost:8010/proxy/suburbs.json?q=Syd`)
       .then(res => {
@@ -26,14 +27,9 @@ export default class App extends React.Component {
     )
   }
 
+  // Shows the alert with the updated inputValue
   handleSubmit = (inputValue) => {
     alert(inputValue)
-  }
-
-  handleChange = (event) => {
-    this.setState({
-      value: event.target.value
-    })
   }
 
   render() {
@@ -41,35 +37,36 @@ export default class App extends React.Component {
       this.state.suburbs,
       value,
       {keys: [
-        'name',
+        'name', // Can search through all these paramters with the inputValue
         'locality',
         'postcode',
         'state.name',
         'state.abbreviation',
       ]}
     ) : this.state.suburbs
+
     return (
       <div>
         <Downshift itemToString={itemToString}>
           {({
-            getInputProps,
+            getInputProps,  // Getters
             getItemProps,
             getLabelProps,
             getMenuProps,
 
-            clearSelection,
+            clearSelection, // Actions
 
-            highlightedIndex,
+            highlightedIndex, // State
             inputValue,
             isOpen,
             selectedItem,
           }) => (
             <div>
-              <label {...getLabelProps()}> Suburbs </label>
-              <InputButtonContainer>
+              <LabelInputButtonContainer>
+                <label {...getLabelProps()}> Suburbs </label>
                 <Input {...getInputProps()}/>
                 <Button onClick={() => this.handleSubmit(inputValue)}/>
-              </InputButtonContainer>
+              </LabelInputButtonContainer>
               <ResultsListContainer
                 {...getMenuProps()}
               >

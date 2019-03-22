@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
-export const InputButtonContainer = styled.div`
+export const LabelInputButtonContainer = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
 `;
